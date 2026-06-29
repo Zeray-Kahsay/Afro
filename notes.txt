@@ -1,0 +1,36 @@
+- Do not send images through your API to Azure Blob Storage
+- Instead use: Frontend -> Request Upload URL -> Azure Blob Storage
+- OR: Frontend -> Cloudinary
+- Your API only stores metadata. 
+React -> Upload Image -> Cloudinary -> Receive URL -> POST URL to API
+
+Endpoint: POST /api/properties/{propertyId}/images
+
+Request
+{
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/...1.jpg",
+      "isCover": true
+    },
+    {
+      "url": "https://res.cloudinary.com/...2.jpg",
+      "isCover": false
+    },
+    {
+      "url": "https://res.cloudinary.com/...3.jpg",
+      "isCover": false
+    }
+  ]
+}
+
+- This is React friendly and uploads images in parallel-- submits one Request
+WHY URLs Instead of IFormFile ?? 
+-- Because IFormFile couples your API to storage. URLs don't
+-- Easy to switch from Cloudinary -> Azure Blob Storage
+
+
+// TODO: 
+   DUPLICATE upload image DETECTION-- 
+   RestoreProperty -- Archived property to live 
+

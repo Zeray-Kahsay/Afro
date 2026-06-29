@@ -1,0 +1,6 @@
+namespace Afro.API.src.BuildingBlocks.Results;
+
+public sealed record Error(string Code, string Message);
+
+
+
