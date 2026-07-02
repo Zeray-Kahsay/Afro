@@ -33,4 +33,5 @@ WHY URLs Instead of IFormFile ??
 // TODO: 
    DUPLICATE upload image DETECTION-- 
    RestoreProperty -- Archived property to live 
+   login error message and Create owner error messages 
 
