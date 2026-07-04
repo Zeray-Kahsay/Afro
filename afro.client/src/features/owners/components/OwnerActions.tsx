@@ -26,7 +26,7 @@ export function OwnerActions({
                 <Link
                     to={`/owners/${owner.id}`}
                 >
-                    <Eye className="size-4" />
+                    <Eye />
                 </Link>
             </Button>
 
@@ -38,7 +38,7 @@ export function OwnerActions({
                 <Link
                     to={`/owners/${owner.id}/edit`}
                 >
-                    <Pencil className="size-4" />
+                    <Pencil />
                 </Link>
             </Button>
 
@@ -49,7 +49,7 @@ export function OwnerActions({
                     console.log("Archive", owner.id);
                 }}
             >
-                <Archive className="size-4" />
+                <Archive  />
             </Button>
 
         </DataTableAction>

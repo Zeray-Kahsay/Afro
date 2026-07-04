@@ -1,11 +1,8 @@
 import { useOwners } from "../hooks/useOwners";
-import { OwnerTable } from "../components/OwnerTable";
-import { LoadingSpinner } from "@/@/components/shared/LoadingSpinner";
 import { Button } from "@/@/components/ui/button";
-import { EmptyState } from "@/@/components/shared/EmptyState";
 import { Link } from "react-router-dom";
 import { PageHeader } from "@/@/components/shared/PageHeader";
-import { PageContainer, SearchInput } from "@/@/components/shared";
+import { PageContainer } from "@/@/components/shared";
 import { Plus } from "@/@/components/icons";
 import { DataTable, DataTableSearch, DataTableToolbar } from "@/@/components/data-table";
 import { ownerColumns } from "../components/OwnerColumns";

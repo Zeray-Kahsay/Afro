@@ -6,4 +6,6 @@ export interface Owner {
     country: string;
     city: string;
     createdAtUtc: string;
+    notes?: string;
+    address?: string;
 }

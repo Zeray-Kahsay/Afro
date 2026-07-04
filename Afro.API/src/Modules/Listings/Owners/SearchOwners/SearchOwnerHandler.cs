@@ -27,7 +27,8 @@ public sealed class SearchOwnerHandler(AppDbContext dbContext)
                 x.FullName,
                 x.PhoneNumber,
                 x.Email,
-                x.Address
+                x.Address,
+                x.Notes ?? "No notes available."
             )).ToListAsync(ct);
     }
 }

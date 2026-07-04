@@ -23,7 +23,8 @@ public sealed class GetOwnerHandler (AppDbContext dbContext)
                 owner.FullName,
                 owner.PhoneNumber,
                 owner.Email,
-                owner.Address
+                owner.Address,
+                owner.Notes
         ));
 
     }

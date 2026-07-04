@@ -6,6 +6,7 @@ import { CreateOwnerPage } from "../../features/owners/pages/CreateOwnerPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { DashboardLayout } from "../layouts/DashboardLayout";
 import { OwnerListPage } from "@/features/owners/pages/OwnerListPage";
+import { OwnerDetailsPage } from "@/features/owners/pages/OwnerDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
                 children:[
                     { path: "/", element: createElement(DashboardPage) },
                     { path: "/owners", element: createElement(OwnerListPage) },
+                    { path: "/owners/:ownerId", element: createElement(OwnerDetailsPage) },
                     { path: "/owners/create", element: createElement(CreateOwnerPage) },
                 ],
             },

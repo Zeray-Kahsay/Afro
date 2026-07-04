@@ -2,16 +2,16 @@ import type { ReactNode } from "react";
 
 interface PageHeaderProps {
     title: string;
-
     description?: string;
-
     action?: ReactNode;
+    navigation?: ReactNode;
 }
 
 export function PageHeader({
     title,
     description,
     action,
+    navigation,
 }: PageHeaderProps) {
     return (
         <div
@@ -22,12 +22,16 @@ export function PageHeader({
             gap-4
             "
         >
+
+            {navigation}
+
             <div>
 
                 <h1
                     className="
                     text-3xl
                     font-bold
+                    tracking-tight
                     "
                 >
                     {title}
@@ -37,7 +41,7 @@ export function PageHeader({
 
                     <p
                         className="
-                        mt-2
+                        mt-1
                         text-muted-foreground
                         "
                     >

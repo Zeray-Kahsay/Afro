@@ -1,10 +1,12 @@
 namespace Afro.API.src.Modules.Listings.Owners;
 
-public sealed record OwnerResponse (
+public sealed record OwnerResponse(
     Guid Id,
     string FullName,
     string PhoneNumber,
     string? Email,
-    string? Address
+    string? Address,
+    string? Notes
 );
+    
 

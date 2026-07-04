@@ -15,10 +15,6 @@ export const ownerApi = baseApi.injectEndpoints({
             providesTags: ["Owners"],
         }),
 
-        getOwner: builder.query<Owner, string>({
-            query: id => `/owners/${id}`
-        }),
-
         createOwner: builder.mutation<Owner, CreateOwnerRequest>({
             query: body => ({
                 url: "/owners",
@@ -28,6 +24,12 @@ export const ownerApi = baseApi.injectEndpoints({
             invalidatesTags: ["Owners"]
         }),
 
+        getOwner: builder.query<Owner, string>({
+            query: ownerId => `/owners/${ownerId}`,
+            providesTags: (_result, _error, ownerId) =>
+                 [{ type: "Owners", id: ownerId }],
+        }),
+
 
     }),// endpoints
 });
@@ -35,5 +37,5 @@ export const ownerApi = baseApi.injectEndpoints({
 export const {
     useCreateOwnerMutation,
     useGetOwnerQuery,
-    useSearchOwnersQuery
+    useSearchOwnersQuery,
 } = ownerApi;
