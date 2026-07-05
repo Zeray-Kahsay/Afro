@@ -1,6 +1,7 @@
 import { baseApi } from "@/api/baseApi";
 import type { Owner } from "../types/Owner";
 import type { CreateOwnerRequest } from "../types/CreateOwnerRequest";
+import type { UpdateOwnerRequest } from "../types/UpdateOwnerRequest";
 
 export const ownerApi = baseApi.injectEndpoints({
     endpoints: builder => ({
@@ -30,6 +31,17 @@ export const ownerApi = baseApi.injectEndpoints({
                  [{ type: "Owners", id: ownerId }],
         }),
 
+        updateOwner: builder.mutation<void, UpdateOwnerRequest>({
+            query: ({ownerId, ...body}) => ({
+                url: `/owners/${ownerId}`,
+                method: "PUT",
+                body
+            }),
+            invalidatesTags: (_result, _error, arg) => [
+                {type: "Owners", id: arg.ownerId}, "Owners"
+            ],
+        }),
+
 
     }),// endpoints
 });
@@ -37,5 +49,6 @@ export const ownerApi = baseApi.injectEndpoints({
 export const {
     useCreateOwnerMutation,
     useGetOwnerQuery,
+    useUpdateOwnerMutation,
     useSearchOwnersQuery,
 } = ownerApi;

@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { useCreateOwnerMutation } from "../api/ownerApi";
 import { useForm } from "react-hook-form";
 import {  ownerSchema, type OwnerFormValues } from "../validation/ownerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,56 +5,79 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/@/components/ui/card
 import { Form } from "@/@/components/ui/form";
 import { PhoneNumberField, SubmitButton, TextField } from "@/@/components/forms";
 import { TextAreaField } from "@/@/components/forms/fields/TextAreaField";
+import { useEffect } from "react";
 
-interface Props {
-    onSuccess?: () => void;
+interface OwnerFormProps {
+    initialValues?: OwnerFormValues;
+    loading?: boolean;
+    submitText: string;
+    title?: string;
+    onSubmit(values: OwnerFormValues) : Promise<void>
 }
 
-export function OwnerForm({onSuccess}: Props){
-    const navigate = useNavigate();
-    const [createOwner, {isLoading}] = useCreateOwnerMutation();
+const emptyValues: OwnerFormValues = {
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    notes: "",
+}
+
+export function OwnerForm({
+    initialValues,
+    title,
+    submitText,
+    loading = false,
+    onSubmit
+}: OwnerFormProps){
+   
 
     const form = useForm<OwnerFormValues>({
         resolver: zodResolver(ownerSchema),
-
-        defaultValues: {
-            fullName: "",
-            phoneNumber: "",
-            email: "",
-            address: "",
-            notes: ""
-        },
+        defaultValues: initialValues ?? emptyValues    
     });
 
-    const onSubmit = async (values: OwnerFormValues) => {
-        console.log("Submitting owner");
-        console.log(values);
-        try {
-            const result = await createOwner(values).unwrap();
-            console.log(result);
-            console.log(values);
-            form.reset();
-
-            if (onSuccess){
-                onSuccess();
-                return;
-            }
-            navigate("/owners");
-        } catch (error) {
-            console.error(error)
+    useEffect(() => {
+        if (initialValues){
+            form.reset(initialValues);
         }
-    };
+    }, [initialValues, form])
+
+    const handleSubmit = async (values: OwnerFormValues) => {
+        await onSubmit(values);
+    }
+
+    // const onSubmit = async (values: OwnerFormValues) => {
+    //     console.log("Submitting owner");
+    //     console.log(values);
+    //     try {
+    //         const result = await createOwner(values).unwrap();
+    //         console.log(result);
+    //         console.log(values);
+    //         form.reset();
+
+    //         if (onSuccess){
+    //             onSuccess();
+    //             return;
+    //         }
+    //         navigate("/owners");
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // };
 
     return (
         <Card className="rounded-xl shadow-sm">
             <CardHeader>
-                <CardTitle>Create Owner</CardTitle>
+                <CardTitle>
+                    {title}
+                </CardTitle>
             </CardHeader>
 
             <CardContent>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={form.handleSubmit(handleSubmit)}
                         className="space-y-6"
                     >
 
@@ -93,9 +114,9 @@ export function OwnerForm({onSuccess}: Props){
                          />
 
                          <SubmitButton 
-                            loading={isLoading}
+                            loading={loading}
                          >
-                            Create Owner
+                            {submitText}
                         </SubmitButton>
 
                     </form>

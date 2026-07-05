@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { DashboardLayout } from "../layouts/DashboardLayout";
 import { OwnerListPage } from "@/features/owners/pages/OwnerListPage";
 import { OwnerDetailsPage } from "@/features/owners/pages/OwnerDetailsPage";
+import { EditOwnerPage } from "@/features/owners/pages/EditOwnerPage";
 
 export const router = createBrowserRouter([
     {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
                     { path: "/owners", element: createElement(OwnerListPage) },
                     { path: "/owners/:ownerId", element: createElement(OwnerDetailsPage) },
                     { path: "/owners/create", element: createElement(CreateOwnerPage) },
+                    { path: "/owners/:ownerId/edit", element: createElement(EditOwnerPage) },
                 ],
             },
         ],

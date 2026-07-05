@@ -9,6 +9,8 @@ public sealed class Owner
     public string? Address  { get; private set; }
     public string? Notes  { get; private set; }
     public DateTime CreatedAtUtc  { get; private set; }
+    //public DateTime? UpdatedUtc  { get; private set; }
+    //public DateTime? ArchivedAtUtc  { get; private set; }
     private readonly List<Property> _properties = [];
 
     public IReadOnlyCollection<Property> Properties => _properties.AsReadOnly();
@@ -35,7 +37,7 @@ public sealed class Owner
         };
     }
 
-    public void UpdateProfile(
+    public void Update(
         string fullName,
         string phoneNumber,
         string? email,
@@ -43,10 +45,12 @@ public sealed class Owner
         string? notes
     )
     {
-        FullName = fullName;
-        PhoneNumber = phoneNumber;
-        Email = email;
-        Address = address;
-        Notes = notes;
+        FullName = fullName.Trim();
+        PhoneNumber = phoneNumber.Trim();
+        Email = string.IsNullOrWhiteSpace(email) ? null : email;
+        Address = address?.Trim();
+        Notes = notes?.Trim();
     }
+
+    
 }
