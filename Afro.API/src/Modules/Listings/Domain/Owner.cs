@@ -9,8 +9,9 @@ public sealed class Owner
     public string? Address  { get; private set; }
     public string? Notes  { get; private set; }
     public DateTime CreatedAtUtc  { get; private set; }
-    //public DateTime? UpdatedUtc  { get; private set; }
-    //public DateTime? ArchivedAtUtc  { get; private set; }
+    public DateTime? UpdatedUtc  { get; private set; }
+    public bool IsArchived { get; private set; } = false;
+    public DateTime? ArchivedAtUtc  { get; private set; }
     private readonly List<Property> _properties = [];
 
     public IReadOnlyCollection<Property> Properties => _properties.AsReadOnly();
@@ -51,6 +52,29 @@ public sealed class Owner
         Address = address?.Trim();
         Notes = notes?.Trim();
     }
+
+    public void Archive()
+    {
+        if (IsArchived)
+        {
+            throw new InvalidOperationException("Owner is already archived");
+        }
+
+        IsArchived = true;
+        ArchivedAtUtc = DateTime.UtcNow;
+    }
+
+    public void Restore()
+    {
+        if (!IsArchived)
+        {
+            throw new InvalidOperationException("Owner is already active");
+        }
+
+        IsArchived = false;
+        ArchivedAtUtc = null;
+    }
+
 
     
 }

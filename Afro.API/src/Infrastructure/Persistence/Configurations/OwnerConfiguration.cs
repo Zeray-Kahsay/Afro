@@ -10,6 +10,9 @@ public sealed class OwnerConfiguration : IEntityTypeConfiguration<Owner>
     {
         builder.ToTable("Owners");
 
+        // Global query filter
+        //builder.HasQueryFilter(x => !x.IsArchived);
+
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.FullName)

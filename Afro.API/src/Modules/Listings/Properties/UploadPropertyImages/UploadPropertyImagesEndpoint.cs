@@ -17,7 +17,7 @@ public static class UploadPropertyImagesEndpoint
             )]
         async (
                     Guid propertyId,
-                    UploadPropertyImagesCommand command,
+                    [FromBody] UploadPropertyImagesCommand command,
                     [FromServices] UploadPropertyImagesValidator validator,
                     [FromServices] UploadPropertyImagesHandler handler,
                     CancellationToken ct

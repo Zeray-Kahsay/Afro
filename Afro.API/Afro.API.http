@@ -1,6 +1,49 @@
+@Afro = Afro.API
 @Afro.API_HostAddress = http://localhost:5000
 @ContentType = application/json
 
 # Auth API Tests
+
+# SearchOwner API Tests
+
+### Search Owner - Get all owners
+GET {{Afro.API_HostAddress}}/api/searchowner
+Content-Type: {{ContentType}}
+
+### Search Owner - Get owner by ID
+GET {{Afro.API_HostAddress}}/api/searchowner/1
+Content-Type: {{ContentType}}
+
+### Search Owner - Search by name
+GET {{Afro.API_HostAddress}}/api/searchowner?name=john
+Content-Type: {{ContentType}}
+
+### Search Owner - Search with pagination
+GET {{Afro.API_HostAddress}}/api/searchowner?page=1&pageSize=10
+Content-Type: {{ContentType}}
+
+### Search Owner - Create new owner
+POST {{Afro.API_HostAddress}}/api/searchowner
+Content-Type: {{ContentType}}
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "1234567890"
+}
+
+### Search Owner - Update owner
+PUT {{Afro.API_HostAddress}}/api/searchowner/1
+Content-Type: {{ContentType}}
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "phone": "0987654321"
+}
+
+### Search Owner - Delete owner
+DELETE {{Afro.API_HostAddress}}/api/searchowner/1
+Content-Type: {{ContentType}}
 
 

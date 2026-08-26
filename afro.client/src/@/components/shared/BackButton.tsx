@@ -19,7 +19,8 @@ export function BackButton({ to, children, className, replace = false, disabled 
         "text-sm font-medium",
         "text-muted-foreground",
         "transition-colors duration-200",
-        "hover:text-primary",
+        "text-indigo-500",
+        "hover:text-indigo-800",
         "disabled:pointer-events-none disabled:opacity-50",
         className
     );

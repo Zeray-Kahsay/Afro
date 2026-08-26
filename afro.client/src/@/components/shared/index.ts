@@ -5,3 +5,4 @@ export * from "./ConfirmDialog";
 export * from "./SearchInput";
 export * from "./PageContainer";
 export * from "./BackButton";
+export * from "./ConfirmDialog";

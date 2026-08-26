@@ -13,10 +13,10 @@ public static class UpdateOwnerEndpoint
         group.MapPut(
             "/owners/{ownerId:guid}",
             [Authorize(
-                Roles = $"{RoleNames.Admin} {RoleNames.Agent}"
+                Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
             )] async (
                 Guid ownerId,
-                UpdateOwnerCommand command,
+                [FromBody] UpdateOwnerCommand command,
                 [FromServices] UpdateOwnerValidator validator,
                 [FromServices] UpdateOwnerHandler handler,
                 CancellationToken ct

@@ -2,6 +2,17 @@ import { baseApi } from "@/api/baseApi";
 import type { Owner } from "../types/Owner";
 import type { CreateOwnerRequest } from "../types/CreateOwnerRequest";
 import type { UpdateOwnerRequest } from "../types/UpdateOwnerRequest";
+import type { OwnerStatistics } from "../types/OwnerStatistics";
+import type { OwnerStatusFilter } from "../types/OwnerStatusFilter";
+import type { CursorPagedResponse } from "@/shared/pagination/index";
+
+
+export interface SearchOwnerParams {
+    search?: string;
+    status?: (typeof OwnerStatusFilter)[keyof typeof OwnerStatusFilter];
+    pageNumber?: number;
+    pageSize?: number;
+}
 
 export const ownerApi = baseApi.injectEndpoints({
     endpoints: builder => ({
@@ -42,6 +53,27 @@ export const ownerApi = baseApi.injectEndpoints({
             ],
         }),
 
+        archiveOwner: builder.mutation<void, string>({
+            query: ownerId => ({
+                url: `/owners/${ownerId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Owners"]
+        }),
+
+        getOwners: builder.query<CursorPagedResponse<Owner>, SearchOwnerParams>({
+            query: params => ({
+                url: "/owners",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["Owners"]
+        }),
+
+        getOwnerStatistics: builder.query<OwnerStatistics, void>({
+            query: () => "/owners/statistics",
+            providesTags:["Owners"]
+        }),
 
     }),// endpoints
 });
@@ -49,6 +81,8 @@ export const ownerApi = baseApi.injectEndpoints({
 export const {
     useCreateOwnerMutation,
     useGetOwnerQuery,
+    useGetOwnersQuery,
     useUpdateOwnerMutation,
     useSearchOwnersQuery,
-} = ownerApi;
+    useArchiveOwnerMutation
+} = ownerApi

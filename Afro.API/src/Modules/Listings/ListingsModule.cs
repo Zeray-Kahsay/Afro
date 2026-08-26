@@ -1,6 +1,8 @@
+using Afro.API.src.Modules.Listings.Owners.ArchiveOwner;
 using Afro.API.src.Modules.Listings.Owners.CreateOwner;
 using Afro.API.src.Modules.Listings.Owners.GetOwner;
 using Afro.API.src.Modules.Listings.Owners.SearchOwners;
+using Afro.API.src.Modules.Listings.Owners.UpdateOwner;
 using Afro.API.src.Modules.Listings.Properties.ArchiveProperty;
 using Afro.API.src.Modules.Listings.Properties.CreateProperty;
 using Afro.API.src.Modules.Listings.Properties.GetProperty;
@@ -21,7 +23,13 @@ public static class ListingsModule
 
         services.AddScoped<GetOwnerHandler>();
 
+        services.AddScoped<UpdateOwnerHandler>();
+        services.AddScoped<UpdateOwnerValidator>();
+
         services.AddScoped<SearchOwnerHandler>();
+
+        services.AddScoped<ArchiveOwnerHandler>();
+        services.AddScoped<ArchiveOwnerValidator>();
 
         services.AddScoped<CreatePropertyHandler>();
         services.AddScoped<CreatePropertyValidator>();

@@ -1,5 +1,4 @@
 using Afro.API.Modules.BuildingBlocks.Results;
-using Microsoft.AspNetCore.Http;
 
 namespace Afro.API.src.BuildingBlocks.Results;
 

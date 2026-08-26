@@ -35,3 +35,48 @@ WHY URLs Instead of IFormFile ??
    RestoreProperty -- Archived property to live 
    login error message and Create owner error messages 
 
+
+Modules
+└── Listings
+    ├── Application
+    │   ├── Commands
+    │   │   ├── CreateOwner
+    │   │   ├── UpdateOwner
+    │   │   └── ArchiveOwner
+    │   │
+    │   ├── Queries
+    │   └── Responses
+    │
+    ├── Domain
+    │
+    ├── Infrastructure
+    │
+    └── Presentation
+        ├── Endpoints
+        │
+        ├── Requests
+        │   ├── CreateOwnerRequest.cs
+        │   ├── UpdateOwnerRequest.cs
+        │   └── SearchOwnerRequest.cs
+        │
+        └── Responses
+
+
+
+OwnerListPage
+│
+├── search state
+├── status state
+├── cursor state
+│
+├── useGetOwnersQuery()
+│
+├── useInfiniteCursor()
+│
+├── OwnerToolbar
+│
+├── OwnerTable
+│
+└── InfiniteScrollTrigger
+          │
+          └── loadMore()

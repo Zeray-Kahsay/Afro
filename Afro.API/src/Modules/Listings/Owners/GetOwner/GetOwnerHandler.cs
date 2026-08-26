@@ -1,5 +1,6 @@
 using Afro.API.src.BuildingBlocks.Results;
 using Afro.API.src.Infrastructure.Persistence;
+using Afro.API.src.Infrastructure.Queries;
 using Afro.API.src.Modules.Listings.Constants;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +10,8 @@ public sealed class GetOwnerHandler (AppDbContext dbContext)
 {
     public async Task<Result<OwnerResponse>> HandleGetOwnerAsync(Guid ownerId, CancellationToken ct)
     {
-        var owner = await dbContext.Owners
-                .AsNoTracking()
-                .FirstOrDefaultAsync(ow => ow.Id == ownerId, ct);
+        var owner = await dbContext.GetActiveByIdAsync(ownerId, ct);
+     
         
         if (owner is null)
         {

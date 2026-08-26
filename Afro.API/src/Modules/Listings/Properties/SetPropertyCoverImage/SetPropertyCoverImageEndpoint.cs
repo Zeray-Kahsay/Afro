@@ -1,6 +1,7 @@
 using Afro.API.src.BuildingBlocks.Results;
 using Afro.API.src.Modules.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Afro.API.src.Modules.Listings.Properties.SetPropertyCoverImage;
 
@@ -13,10 +14,10 @@ public static class SetPropertyCoverImageEndpoint
             [Authorize(
                 Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
             )]
-            async (
+        async (
                 Guid propertyId,
-                SetPropertyCoverImageCommand command,
-                SetPropertyCoverImageHandler handler,
+                [FromBody] SetPropertyCoverImageCommand command,
+                [FromServices] SetPropertyCoverImageHandler handler,
                 CancellationToken ct
             ) =>
             {

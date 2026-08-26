@@ -1,10 +1,11 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetOwnerQuery, useUpdateOwnerMutation } from "../api/ownerApi";
-import { EmptyState, LoadingSpinner } from "@/@/components/shared";
+import { BackButton, EmptyState, LoadingSpinner, PageHeader } from "@/@/components/shared";
 import type { OwnerFormValues } from "../validation/ownerSchema";
 import { notify } from "@/@/lib/notify";
 import { getErrorMessage } from "@/api/errorHandler";
 import { OwnerForm } from "../components/OwnerForm";
+import { Button } from "@/@/components/ui/button";
 
 export function EditOwnerPage (){
     const {ownerId} = useParams();
@@ -32,6 +33,16 @@ export function EditOwnerPage (){
     }
 
     return (
+        <>
+              <PageHeader 
+                        title=""
+                        description=""
+                        navigation={
+                            <BackButton to="/owners" replace className="mb-3.5 text-indigo-500 hover:text-indigo-700">
+                                Back to Owners
+                            </BackButton>
+                        }
+                    />
         <OwnerForm 
             title="Edit Owner"
             submitText="Save Changes"
@@ -45,5 +56,6 @@ export function EditOwnerPage (){
             }}
             onSubmit={handleSubmit}
         />
+        </>
     );
 }
