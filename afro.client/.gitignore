@@ -24,3 +24,4 @@ notes.txt
 *.njsproj
 *.sln
 *.sw?
+settings.json
