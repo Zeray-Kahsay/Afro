@@ -2,18 +2,23 @@ import type { ReactNode } from "react";
 
 interface DataTableToolbarProps {
     search?: ReactNode;
-    actions?: ReactNode;
+    children?: ReactNode;
 }
 
 export function DataTableToolbar({
     search,
-    actions,
+    children,
 }: DataTableToolbarProps) {
     return (
         <div className="mb-6 flex items-center justify-between gap-4">
-            <div>{search}</div>
+            <div className="flex flex-1 items-center gap-2">
+                {search}
+            </div>
 
-            <div>{actions}</div>
+            <div className="flex items-center gap-2">
+                {children}
+
+            </div>
         </div>
     );
 }

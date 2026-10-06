@@ -1,6 +1,6 @@
 namespace Afro.API.src.BuildingBlocks.Pagination;
 
-public class CursorPagedResponse<T> (
+public record CursorPagedResponse<T>(
     IReadOnlyList<T> Items,
     string? NextCursor,
     bool HasMore

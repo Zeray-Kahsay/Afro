@@ -6,21 +6,19 @@ import { Plus } from "@/@/components/icons";
 import { DataTable, DataTableSearch, DataTableToolbar } from "@/@/components/data-table";
 import { ownerColumns } from "../components/OwnerColumns";
 import { OwnerStatusFilter } from "../types/OwnerStatusFilter";
-import { useEffect, useMemo, useState } from "react";
-import { useInfiniteCursor } from "@/shared/hooks/useInfiniteCursor";
+import { useCallback, useState } from "react";
 import type { SearchOwnerParams } from "../types/SearchOwnerParams";
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { useGetOwnersQuery } from "../api/ownerApi";
-import type { Owner } from "../types/Owner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/@/components/ui/select";
+import { InfiniteScrollTrigger } from "@/shared/components/InfiniteScrollTrigger";
+import { getErrorMessage } from "@/api/errorHandler";
+
 
 export function OwnerListPage(){
+    const [search, setSearch] = useState<string>("");
     const [status, setStatus] = useState<typeof OwnerStatusFilter[keyof typeof OwnerStatusFilter]>(OwnerStatusFilter.Active);
     const [cursor, setCursor] = useState<string | undefined>(undefined);
-    const paginationOptions = useMemo(() => ({
-        getKey: (owner: Owner) => owner.id
-    }), []);
-    const pagination = useInfiniteCursor<Owner>(paginationOptions);
-    const [search, setSearch] = useState<string>("");
     const debouncedSearch = useDebounce(search, 300);
 
     const query : SearchOwnerParams = {
@@ -31,35 +29,7 @@ export function OwnerListPage(){
     }
 
     const { data, error, isLoading, isFetching, refetch } = useGetOwnersQuery(query);
-
-    // A response with no cursor is the first page 
-    // A response with a cursor is a subsequent page
-   useEffect(() => {
-    if (!data){
-        return;
-    }
-
-    if (cursor === undefined){
-        pagination.replacePage(data);
-        return;
-    }
-    pagination.consumePage(data);
-   }, [data, cursor, pagination.consumePage, pagination.replacePage]);
-
-   const loadMore = () => {
-    if (isFetching){
-        return;
-    }
-
-    if (!pagination.hasMore){
-        return;
-    }
-
-    if (!pagination.nextCursor){
-        return;
-    }
-    setCursor(pagination.nextCursor);
-   }
+   
 
    const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -68,19 +38,21 @@ export function OwnerListPage(){
    const handleStatusChange = (value: typeof OwnerStatusFilter[keyof typeof OwnerStatusFilter]) => {
     setStatus(value);
     setCursor(undefined);
-    pagination.clear();
    }
 
-   useEffect(() => {
-    setCursor(undefined);
-    pagination.clear();
-   }, [debouncedSearch]);
+   const loadMore = useCallback(() => {
+        if (isFetching){
+            return;
+        }
 
-   const refresh = () => {
-    setCursor(undefined);
-    pagination.clear();
-    refetch();  
-   }
+        if (!data?.hasMore || !data?.nextCursor){
+            return;
+        }
+
+        setCursor(data.nextCursor);
+
+   }, [isFetching, data?.hasMore, data?.nextCursor]);
+
 
     return (
             <PageContainer>
@@ -105,17 +77,38 @@ export function OwnerListPage(){
                             onChange={handleSearchChange}      
                         />
                     }
-                />
+                >
+                    <Select
+                        value={String(status)}
+                        onValueChange={(value) => handleStatusChange(Number(value) as typeof OwnerStatusFilter[keyof typeof OwnerStatusFilter])}
+                    >
+                        <SelectTrigger className="w-40">
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={String(OwnerStatusFilter.Active)}>Active</SelectItem>
+                            <SelectItem value={String(OwnerStatusFilter.Archived)}>Archived</SelectItem>
+                            <SelectItem value={String(OwnerStatusFilter.All)}>All</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </DataTableToolbar>
 
                 <DataTable
                     columns={ownerColumns}
-                    data={pagination.items}
+                    data={data?.items ?? []}
                     options={{
                         loading: isLoading,
                         emptyTitle: "No Owner Found",
                         emptyDescription: "Create your first owner",
                         
                     }}
+                />
+                <InfiniteScrollTrigger
+                    hasMore={data?.hasMore ?? false}
+                    loading={isFetching}
+                    error={getErrorMessage(error)}
+                    onLoadMore={loadMore}
+                    onRetry={refetch}
                 />
             </PageContainer>
         

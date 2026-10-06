@@ -3,29 +3,20 @@ import type { Owner } from "../types/Owner";
 import type { CreateOwnerRequest } from "../types/CreateOwnerRequest";
 import type { UpdateOwnerRequest } from "../types/UpdateOwnerRequest";
 import type { OwnerStatistics } from "../types/OwnerStatistics";
-import type { OwnerStatusFilter } from "../types/OwnerStatusFilter";
+import { OwnerStatusFilter } from "../types/OwnerStatusFilter";
 import type { CursorPagedResponse } from "@/shared/pagination/index";
 
 
 export interface SearchOwnerParams {
     search?: string;
     status?: (typeof OwnerStatusFilter)[keyof typeof OwnerStatusFilter];
-    pageNumber?: number;
+    cursor?: string;
+    //pageNumber?: number;
     pageSize?: number;
 }
 
 export const ownerApi = baseApi.injectEndpoints({
     endpoints: builder => ({
-
-        searchOwners: builder.query<Owner[], string | void>({
-            query: search => ({
-                url: "/owners",
-                params: {
-                    search,
-                },
-            }),
-            providesTags: ["Owners"],
-        }),
 
         createOwner: builder.mutation<Owner, CreateOwnerRequest>({
             query: body => ({
@@ -67,6 +58,43 @@ export const ownerApi = baseApi.injectEndpoints({
                 method: "GET",
                 params,
             }),
+
+            serializeQueryArgs: ({endpointName, queryArgs }) => ({
+                endpointName,
+                search: queryArgs.search ?? "",
+                status: queryArgs.status ?? OwnerStatusFilter.Active,
+                pageSize: queryArgs.pageSize ?? 20,
+            }),
+
+            forceRefetch({currentArg, previousArg}) {
+                return (
+                    currentArg?.cursor !== previousArg?.cursor ||
+                    currentArg?.search !== previousArg?.search ||
+                    currentArg?.status !== previousArg?.status ||
+                    currentArg?.pageSize !== previousArg?.pageSize
+                );
+            },
+
+            merge(currentCache, newPage, {arg}){
+                if (!arg?.cursor){
+                    currentCache.items = newPage.items;
+                    currentCache.nextCursor = newPage.nextCursor;
+                    currentCache.hasMore = newPage.hasMore;
+
+                    return;
+                }
+
+                const existingIds = new Set(currentCache.items.map(owner => owner.id));
+
+                for (const owner of newPage.items){
+                    if (!existingIds.has(owner.id)){
+                        currentCache.items.push(owner);
+                    }
+                }
+
+                currentCache.nextCursor = newPage.nextCursor;
+                currentCache.hasMore = newPage.hasMore;
+            },
             providesTags: ["Owners"]
         }),
 
@@ -83,6 +111,5 @@ export const {
     useGetOwnerQuery,
     useGetOwnersQuery,
     useUpdateOwnerMutation,
-    useSearchOwnersQuery,
     useArchiveOwnerMutation
 } = ownerApi
