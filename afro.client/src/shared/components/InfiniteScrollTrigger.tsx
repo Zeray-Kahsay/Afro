@@ -22,7 +22,19 @@ export function InfiniteScrollTrigger({
     useEffect(() => {
         const element = triggerRef.current;
 
-        if (!element || !hasMore || loading || error) {
+        if (!element) {
+            return;
+        }
+
+        if (!hasMore){
+            return;
+        }
+
+        if (loading){
+            return;
+        }
+
+        if (error){
             return;
         }
 

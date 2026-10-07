@@ -40,6 +40,9 @@ export function OwnerListPage(){
     setCursor(undefined);
    }
 
+   const paginationError = data && !isLoading && error ?
+                getErrorMessage(error) : undefined;
+
    const loadMore = useCallback(() => {
         if (isFetching){
             return;
@@ -106,7 +109,7 @@ export function OwnerListPage(){
                 <InfiniteScrollTrigger
                     hasMore={data?.hasMore ?? false}
                     loading={isFetching}
-                    error={getErrorMessage(error)}
+                    error={paginationError}
                     onLoadMore={loadMore}
                     onRetry={refetch}
                 />
