@@ -63,20 +63,3 @@ Modules
 
 
 
-OwnerListPage
-│
-├── search state
-├── status state
-├── cursor state
-│
-├── useGetOwnersQuery()
-│
-├── useInfiniteCursor()
-│
-├── OwnerToolbar
-│
-├── OwnerTable
-│
-└── InfiniteScrollTrigger
-          │
-          └── loadMore()

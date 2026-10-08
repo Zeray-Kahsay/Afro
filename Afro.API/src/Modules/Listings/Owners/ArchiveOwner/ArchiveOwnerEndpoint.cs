@@ -11,7 +11,7 @@ public static class ArchiveOwnerEndpoint
     public static RouteGroupBuilder MapDeleteOwner(this RouteGroupBuilder group)
     {
         group.MapDelete(
-            "/owners/{ownerId:guid}",
+            "/owners/{ownerId:guid}/archive",
             [Authorize(Roles = $"{Policies.AppPolicies}")]
 
         async (

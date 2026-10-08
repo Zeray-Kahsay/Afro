@@ -33,4 +33,10 @@ public static class ListingErrors
             "Listings.ArchivedPropertyCannotBeUpdated",
             "Achived properties cannot be updated"
         );
+    
+    public static readonly Error OwnerNotArchived = 
+        new (
+            "Listings.OwnerNotArchived",
+            "Owner is not archived"
+        );
 }
