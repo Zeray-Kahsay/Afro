@@ -39,4 +39,10 @@ public static class ListingErrors
             "Listings.OwnerNotArchived",
             "Owner is not archived"
         );
+
+    public static readonly Error OwnerHasActiveListings = 
+        new (
+            "Listings.OwnerHasActiveListings",
+            "Owner has active listings and cannot be cleared"
+        );
 }

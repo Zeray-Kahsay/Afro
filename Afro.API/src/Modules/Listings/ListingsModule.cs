@@ -1,4 +1,5 @@
 using Afro.API.src.Modules.Listings.Owners.ArchiveOwner;
+using Afro.API.src.Modules.Listings.Owners.ClearOwner;
 using Afro.API.src.Modules.Listings.Owners.CreateOwner;
 using Afro.API.src.Modules.Listings.Owners.GetOwner;
 using Afro.API.src.Modules.Listings.Owners.RestoreOwner;
@@ -50,6 +51,8 @@ public static class ListingsModule
         services.AddScoped<UpdatePropertyValidator>();
 
         services.AddScoped<RestoreOwnerHandler>();
+
+        services.AddScoped<ClearOwnerHandler>();
         
 
 

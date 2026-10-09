@@ -51,6 +51,7 @@ public sealed class Owner
         Email = string.IsNullOrWhiteSpace(email) ? null : email;
         Address = address?.Trim();
         Notes = notes?.Trim();
+        UpdatedUtc = DateTime.UtcNow;
     }
 
     public void Archive()
@@ -73,6 +74,7 @@ public sealed class Owner
 
         IsArchived = false;
         ArchivedAtUtc = null;
+        UpdatedUtc = DateTime.UtcNow;
     }
 
 

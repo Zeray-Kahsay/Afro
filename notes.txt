@@ -62,4 +62,13 @@ Modules
         └── Responses
 
 
+Active Owner
+    ↓
+❌ Cannot permanently delete
 
+Archived Owner
+    ↓
+Has Properties?
+    ├── Yes → ❌ Cannot permanently delete
+    │
+    └── No → ✅ Permanently delete

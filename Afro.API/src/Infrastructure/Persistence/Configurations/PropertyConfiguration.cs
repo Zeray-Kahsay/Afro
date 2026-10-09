@@ -15,43 +15,43 @@ public sealed class PropertyConfiguration : IEntityTypeConfiguration<Property>
         builder.Property(p => p.Title)
             .IsRequired()
             .HasMaxLength(200);
-        
+
         builder.Property(p => p.Description)
             .IsRequired()
             .HasMaxLength(5000);
 
         builder.Property(p => p.Price)
             .HasPrecision(18, 2);
-        
+
         builder.Property(p => p.Country)
             .IsRequired()
             .HasMaxLength(100);
-        
+
         builder.Property(p => p.City)
             .IsRequired()
             .HasMaxLength(100);
-        
+
         builder.Property(p => p.AddressLine)
             .HasMaxLength(500);
-        
+
         builder.Property(p => p.Area)
             .HasPrecision(18, 2);
-        
+
         builder.Property(p => p.Purpose)
             .HasConversion<int>();
-        
+
         builder.Property(p => p.Type)
             .HasConversion<int>();
 
         builder.Property(p => p.Status)
             .HasConversion<int>();
-        
+
         builder.Property(p => p.CreatedAtUtc)
             .IsRequired();
-        
+
         builder.Property(p => p.UpdatedAtUtc)
             .IsRequired();
-        
+
         builder.HasIndex(p => p.Status);
         builder.HasIndex(p => p.Type);
         builder.HasIndex(p => p.Purpose);

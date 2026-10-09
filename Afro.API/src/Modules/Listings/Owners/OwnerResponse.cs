@@ -6,7 +6,8 @@ public sealed record OwnerResponse(
     string PhoneNumber,
     string? Email,
     string? Address,
-    string? Notes
+    string? Notes,
+    bool IsArchived
 );
     
 

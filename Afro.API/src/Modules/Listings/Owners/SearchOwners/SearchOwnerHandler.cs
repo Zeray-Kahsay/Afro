@@ -56,6 +56,7 @@ public sealed class SearchOwnerHandler(AppDbContext dbContext)
                     x.PhoneNumber,
                     x.Email,
                     x.Address,
+                    x.IsArchived,
                     Notes = x.Notes ?? "No notes available."
                 }).ToListAsync(ct);
 
@@ -73,7 +74,8 @@ public sealed class SearchOwnerHandler(AppDbContext dbContext)
             x.PhoneNumber,
             x.Email,
             x.Address,
-            x.Notes
+            x.Notes,
+            x.IsArchived
         )).ToList();
 
         return Result<CursorPagedResponse<OwnerResponse>>.Success(

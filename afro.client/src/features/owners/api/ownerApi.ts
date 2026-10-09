@@ -11,7 +11,6 @@ export interface SearchOwnerParams {
     search?: string;
     status?: (typeof OwnerStatusFilter)[keyof typeof OwnerStatusFilter];
     cursor?: string;
-    //pageNumber?: number;
     pageSize?: number;
 }
 
@@ -46,7 +45,23 @@ export const ownerApi = baseApi.injectEndpoints({
 
         archiveOwner: builder.mutation<void, string>({
             query: ownerId => ({
-                url: `/owners/${ownerId}`,
+                url: `/owners/${ownerId}/archive`,
+                method: "POST",
+            }),
+            invalidatesTags: ["Owners"]
+        }),
+
+        restoreOwner: builder.mutation<void, string>({
+            query: ownerId => ({
+                url: `/owners/${ownerId}/restore`,
+                method: "POST",
+            }),
+            invalidatesTags: ["Owners"]
+        }),
+
+        deleteOwner: builder.mutation<void, string>({
+            query: ownerId => ({
+                url: `/owners/${ownerId}/clear`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Owners"]
@@ -111,5 +126,8 @@ export const {
     useGetOwnerQuery,
     useGetOwnersQuery,
     useUpdateOwnerMutation,
-    useArchiveOwnerMutation
+    useArchiveOwnerMutation,
+    useRestoreOwnerMutation,
+    useDeleteOwnerMutation,
+    useGetOwnerStatisticsQuery,
 } = ownerApi

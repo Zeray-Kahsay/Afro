@@ -1,4 +1,5 @@
 using Afro.API.src.Modules.Listings.Owners.ArchiveOwner;
+using Afro.API.src.Modules.Listings.Owners.ClearOwner;
 using Afro.API.src.Modules.Listings.Owners.CreateOwner;
 using Afro.API.src.Modules.Listings.Owners.GetOwner;
 using Afro.API.src.Modules.Listings.Owners.RestoreOwner;
@@ -49,6 +50,8 @@ public static class ListingEndpoints
         group.MapUpdateProperty();
 
         group.MapRestoreOwner();
+
+        group.MapClearOwner();
 
 
         return app;
