@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Afro.API.src.Modules.Listings.Owners.GetOwner;
 
-public sealed class GetOwnerHandler (AppDbContext dbContext)
+public sealed class GetOwnerHandler(AppDbContext dbContext)
 {
     public async Task<Result<OwnerResponse>> HandleGetOwnerAsync(Guid ownerId, CancellationToken ct)
     {
         var owner = await dbContext.GetActiveByIdAsync(ownerId, ct);
-     
-        
+
+
         if (owner is null)
         {
             return Result<OwnerResponse>.Failure(ListingErrors.OwnerNotFound);
@@ -24,7 +24,8 @@ public sealed class GetOwnerHandler (AppDbContext dbContext)
                 owner.PhoneNumber,
                 owner.Email,
                 owner.Address,
-                owner.Notes
+                owner.Notes,
+                owner.IsArchived
         ));
 
     }

@@ -39,7 +39,8 @@ public sealed class CreateOwnerHandler(AppDbContext dbContext)
                 owner.PhoneNumber,
                 owner.Email,
                 owner.Address,
-                owner.Notes
+                owner.Notes,
+                owner.IsArchived
             ));
     }
 }

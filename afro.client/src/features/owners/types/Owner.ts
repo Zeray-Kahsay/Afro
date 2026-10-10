@@ -8,4 +8,5 @@ export interface Owner {
     createdAtUtc: string;
     notes?: string;
     address?: string;
+    isArchived: boolean;
 }

@@ -29,9 +29,13 @@ public static class ListingEndpoints
 
         group.MapUpdateOwner();
 
-        group.MapSearchOwners();
+        group.MapArchiveOwner();
 
-        group.MapDeleteOwner();
+        group.MapClearOwner();
+
+        group.MapRestoreOwner();
+
+        group.MapSearchOwners();
 
         group.MapCreateProperty();
 
@@ -49,9 +53,6 @@ public static class ListingEndpoints
 
         group.MapUpdateProperty();
 
-        group.MapRestoreOwner();
-
-        group.MapClearOwner();
 
 
         return app;

@@ -8,11 +8,13 @@ namespace Afro.API.src.Modules.Listings.Owners.ArchiveOwner;
 
 public static class ArchiveOwnerEndpoint
 {
-    public static RouteGroupBuilder MapDeleteOwner(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapArchiveOwner(this RouteGroupBuilder group)
     {
-        group.MapDelete(
+        group.MapPost(
             "/owners/{ownerId:guid}/archive",
-            [Authorize(Roles = $"{Policies.AppPolicies}")]
+            [Authorize
+            (Roles = $"{Policies.AppPolicies}"
+            )]
 
         async (
                 Guid ownerId,
