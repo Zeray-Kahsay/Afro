@@ -10,7 +10,7 @@ public sealed class GetOwnerHandler(AppDbContext dbContext)
 {
     public async Task<Result<OwnerResponse>> HandleGetOwnerAsync(Guid ownerId, CancellationToken ct)
     {
-        var owner = await dbContext.GetActiveByIdAsync(ownerId, ct);
+        var owner = await dbContext.GetByIdIncludingArchivedAsync(ownerId, ct);
 
 
         if (owner is null)

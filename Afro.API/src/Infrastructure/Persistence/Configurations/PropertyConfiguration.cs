@@ -10,6 +10,14 @@ public sealed class PropertyConfiguration : IEntityTypeConfiguration<Property>
     {
         builder.ToTable("Properties");
 
+        builder.HasIndex(p => p.OwnerId);
+
+        builder.HasIndex(p => new
+        {
+            p.CreatedAtUtc,
+            p.Id
+        });
+
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Title)

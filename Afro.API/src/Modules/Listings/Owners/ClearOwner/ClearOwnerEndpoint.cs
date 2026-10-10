@@ -9,7 +9,7 @@ public static class ClearOwnerEndpoint
 {
     public static RouteGroupBuilder MapClearOwner(this RouteGroupBuilder group)
     {
-        group.MapPost(
+        group.MapDelete(
              "/owners/{ownerId:guid}/clear",
              [Authorize(
                  Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"

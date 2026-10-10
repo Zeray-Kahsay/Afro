@@ -125,9 +125,11 @@ public sealed class Property
             throw new InvalidOperationException("Property is already archived");
         }
 
-        Status = ListingStatus.Archived;
+        var now = DateTime.UtcNow;
 
-        ArchivedAtUtc = DateTime.UtcNow;
+        Status = ListingStatus.Archived;
+        ArchivedAtUtc = now;
+        UpdatedAtUtc = now;
     }
 
     public void Update(
@@ -143,6 +145,7 @@ public sealed class Property
         string country,
         string city,
         string? addressLine
+    
     )
     {
         OwnerId = ownerId;
