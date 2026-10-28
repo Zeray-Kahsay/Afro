@@ -8,7 +8,7 @@ public sealed record PropertySummaryResponse(
     decimal Price,
     string City,
     string OwnerName,
-    string OwnerPhoneNumebr,
+    string OwnerPhoneNumber,
     PropertyPurpose Purpose,
     PropertyType Type,
     ListingStatus Status,

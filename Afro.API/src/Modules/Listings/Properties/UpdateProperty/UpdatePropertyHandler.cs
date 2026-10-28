@@ -23,7 +23,7 @@ public sealed class UpdatePropertyHandler(AppDbContext dbContext)
             return Result<PropertyRespose>.Failure(ListingErrors.ArchivedPropertyCannotBeUpdated);
         }
 
-        var ownerExists = await dbContext.Owners.AnyAsync(x => x.Id == command.OwnerId, ct);
+        var ownerExists = await dbContext.Owners.AnyAsync(x => x.Id == command.OwnerId && !x.IsArchived, ct);
 
         if (!ownerExists)
         {

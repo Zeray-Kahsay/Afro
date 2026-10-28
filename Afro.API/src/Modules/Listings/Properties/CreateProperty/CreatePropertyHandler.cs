@@ -11,9 +11,10 @@ public sealed class CreatePropertyHandler(AppDbContext dbContext)
     public async Task<Result<PropertyRespose>> HandleAsync(
         CreatePropertyCommand command, CancellationToken ct)
     {
+        
         var ownerExists = await dbContext.Owners.AnyAsync(
-            x => x.Id == command.OwnerId,
-            ct);
+            x => x.Id == command.OwnerId && !x.IsArchived, ct
+        );
         
         if (!ownerExists)
         {
@@ -33,6 +34,8 @@ public sealed class CreatePropertyHandler(AppDbContext dbContext)
                 command.Country,
                 command.City,
                 command.AddressLine);
+        
+        dbContext.Properties.Add(property);
         
         await dbContext.SaveChangesAsync(ct);
 

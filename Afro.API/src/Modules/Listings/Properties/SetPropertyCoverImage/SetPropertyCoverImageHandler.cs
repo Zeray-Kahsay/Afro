@@ -22,6 +22,11 @@ public sealed class SetPropertyCoverImageHandler(AppDbContext dbContext)
             return Result.Failure(ListingErrors.PropertyNotFound);
         }
 
+        if (property.Status == Domain.ListingStatus.Archived)
+        {
+            return Result.Failure(ListingErrors.ArchivedPropertyCannotBeUpdated);
+        }
+
         property.SetCoverImage(command.ImageId);
 
         await dbContext.SaveChangesAsync(ct);

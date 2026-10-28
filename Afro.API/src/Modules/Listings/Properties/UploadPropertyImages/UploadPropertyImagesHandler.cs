@@ -22,10 +22,24 @@ public class UploadPropertyImagesHandler(AppDbContext dbContext)
             return Result<UploadPropertyImagesResponse>.Failure(ListingErrors.PropertyNotFound);
         }
 
-        foreach (var image in command.Images)
+        if (property.Status == Domain.ListingStatus.Archived)
         {
-            property.AddImage(image.Url);
+            return Result<UploadPropertyImagesResponse>.Failure(ListingErrors.ArchivedPropertyCannotBeUpdated);
         }
+
+        // foreach (var image in command.Images)
+        // {
+        //     property.AddImage(
+        //         image.Url,
+        //         image.StorageProvider,
+        //         image.StorageKey,   
+        //         string.Empty,
+        //         property.Images.Count);
+        // }
+
+        // TODO: Implement batch behavior and error mapping for the upload handler. This may include handling cases where some images fail to upload while others succeed, and returning appropriate error messages or statuses for each image.
+        // upload handler's bach behavior and error mapping
+
 
         await dbContext.SaveChangesAsync(ct);
 

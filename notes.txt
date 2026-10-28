@@ -72,3 +72,7 @@ Has Properties?
     ├── Yes → ❌ Cannot permanently delete
     │
     └── No → ✅ Permanently delete
+
+  
+  # Property lifecycle 
+  Draft → Published → Archived → Published

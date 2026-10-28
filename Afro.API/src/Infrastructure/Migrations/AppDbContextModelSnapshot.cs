@@ -284,6 +284,8 @@ namespace Afro.API.src.Infrastructure.Migrations
 
                     b.HasIndex("Type");
 
+                    b.HasIndex("CreatedAtUtc", "Id");
+
                     b.ToTable("Properties", (string)null);
                 });
 
@@ -302,9 +304,13 @@ namespace Afro.API.src.Infrastructure.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
-                    b.Property<string>("StorageProvider")
+                    b.Property<string>("StorageKey")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("StorageProvider")
+                        .HasColumnType("int");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -315,7 +321,45 @@ namespace Afro.API.src.Infrastructure.Migrations
 
                     b.HasIndex("PropertyId");
 
+                    b.HasIndex("PropertyId", "SortOrder");
+
                     b.ToTable("PropertyImages", (string)null);
+                });
+
+            modelBuilder.Entity("Afro.API.src.Modules.Listings.Domain.PropertyImageUploadIntent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinalizedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StorageKey")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("StorageProvider")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("StorageProvider", "StorageKey")
+                        .IsUnique();
+
+                    b.ToTable("PropertyImageUploadIntent", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -447,6 +491,17 @@ namespace Afro.API.src.Infrastructure.Migrations
                 {
                     b.HasOne("Afro.API.src.Modules.Listings.Domain.Property", "Property")
                         .WithMany("Images")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("Afro.API.src.Modules.Listings.Domain.PropertyImageUploadIntent", b =>
+                {
+                    b.HasOne("Afro.API.src.Modules.Listings.Domain.Property", "Property")
+                        .WithMany()
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

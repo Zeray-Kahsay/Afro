@@ -16,7 +16,17 @@ public class PropertyImageConfiguration : IEntityTypeConfiguration<PropertyImage
             .IsRequired()
             .HasMaxLength(2000);
         
+        builder.Property(r => r.StorageProvider)
+            .HasConversion<int>()
+            .IsRequired();
+        builder.Property(x => x.StorageKey)
+            .IsRequired()
+            .HasMaxLength(500);
+        
         builder.Property(r => r.SortOrder)
+            .IsRequired();
+        
+        builder.Property(x => x.IsCover)
             .IsRequired();
         
         builder.HasOne(pi => pi.Property)
@@ -25,6 +35,12 @@ public class PropertyImageConfiguration : IEntityTypeConfiguration<PropertyImage
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasIndex(a => a.PropertyId);
+
+        builder.HasIndex(x => new
+        {
+            x.PropertyId,
+            x.SortOrder
+        });
 
     }
 }

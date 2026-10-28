@@ -1,11 +1,11 @@
-// using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
-// namespace Afro.API.src.BuildingBlocks.Storage;
+namespace Afro.API.src.BuildingBlocks.Storage;
 
-// public sealed class CloudinaryStorageProvider(IOptions<CloudinaryOptions> options) : IStorageProvider
-// {
-//     private readonly CloudinaryOptions _options = options.Value;
-//     public string ProvideName => "Cloudinary";
-// }
+public sealed class CloudinaryStorageProvider(IOptions<CloudinaryOptions> options) : IStorageProvider
+{
+    private readonly CloudinaryOptions _options = options.Value;
+    public string ProvideName => "Cloudinary";
+}
 
 

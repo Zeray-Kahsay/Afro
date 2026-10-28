@@ -22,5 +22,7 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<RefreshAccessToken> RefreshAccessTokens => Set<RefreshAccessToken>();
     public DbSet<Property> Properties => Set<Property>();
     public DbSet<PropertyImage> PropertyImages => Set<PropertyImage>();
+    public DbSet<PropertyImageUploadIntent> PropertyImageUploadIntents => Set<PropertyImageUploadIntent>();
+
 
 }

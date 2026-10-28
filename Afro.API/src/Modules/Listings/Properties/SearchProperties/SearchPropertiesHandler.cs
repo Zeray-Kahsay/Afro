@@ -9,8 +9,8 @@ public sealed class SearchPropertiesHandler(AppDbContext dbContext)
     {
         var properties = dbContext.Properties
                     .AsNoTracking()
-                    .Include(x => x.Owner)
-                    .Include(x => x.Images)
+                    // .Include(x => x.Owner)
+                    // .Include(x => x.Images)
                     .AsQueryable();
         
         // Search by TITLE || DESCRIPTION

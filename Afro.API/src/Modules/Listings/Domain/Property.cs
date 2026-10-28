@@ -65,23 +65,40 @@ public sealed class Property
         };
     }
 
-    public void AddImage(string url)
+    public void AddImage(string url, ImageStorageProvider storageProvider, string storageKey)
     {
+        if (Status == ListingStatus.Archived)
+        {
+            throw new InvalidOperationException("Cannot add images to an archived property");
+        }
+
         ArgumentException.ThrowIfNullOrWhiteSpace(url, nameof(url));
+        ArgumentException.ThrowIfNullOrWhiteSpace(storageKey, nameof(storageKey));
 
         url = url.Trim();
+        storageKey = storageKey.Trim();
 
-        if (_images.Any(x => x.Url.Equals(url, StringComparison.OrdinalIgnoreCase)))
+        if (_images.Count >= MaxImages)
+        {
+            throw new InvalidOperationException($"A property cannot have more than {MaxImages} images");
+        }
+
+        if (_images.Any(x => 
+            x.StorageProvider == storageProvider && x.StorageKey.Equals(storageKey, StringComparison.OrdinalIgnoreCase)
+         ))
         {
             throw new InvalidOperationException("Image with this URL already exists");
         }
 
-        if (_images.Count >= MaxImages)
-        {
-            throw new InvalidOperationException("Maximum number of images exceeded");
-        }
+        var image = PropertyImage.Create(
+            Id,
+            url,
+            storageProvider,
+            storageKey,
+            _images.Count + 1
+        );
 
-        _images.Add(PropertyImage.Create(Id, url, _images.Count + 1));
+        _images.Add(image);
         UpdatedAtUtc = DateTime.UtcNow;
     }
 
@@ -103,6 +120,11 @@ public sealed class Property
 
     public void Publish()
     {
+        if (Status == ListingStatus.Archived)
+        {
+            throw new InvalidOperationException("Archived property cannot be published");
+        }
+       
         if (_images.Count == 0)
         {
             throw new InvalidOperationException("Property must contain at least one image");
