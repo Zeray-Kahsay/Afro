@@ -8,7 +8,7 @@ public sealed class PropertyImageUploadIntentConfiguration : IEntityTypeConfigur
 {
     public void Configure(EntityTypeBuilder<PropertyImageUploadIntent> builder)
     {
-        builder.ToTable("PropertyImageUploadIntent");
+        builder.ToTable("PropertyImageUploadIntents");
 
         builder.HasKey(x => x.Id);
 

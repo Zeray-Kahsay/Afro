@@ -2,17 +2,17 @@ namespace Afro.API.src.Modules.Listings.Domain;
 
 public sealed class PropertyImageUploadIntent
 {
-    public Guid Id  { get; set; }
-    public Guid  PropertyId  { get; set; }
-    public ImageStorageProvider StorageProvider  { get; set; }
+    public Guid Id  { get; private set; }
+    public Guid  PropertyId  { get; private set; }
+    public ImageStorageProvider StorageProvider  { get; private set; }
 
     // Cloudinary public Id during dev; Azure blob name in Prod
-    public string  StorageKey  { get; set; } = null!;
-    public DateTime  CreatedAtUtc  { get; set; }
-    public DateTime  ExpiresAtUtc  { get; set; }
-    public DateTime?  FinalizedAtUtc  { get; set; }
+    public string  StorageKey  { get; private set; } = null!;
+    public DateTime  CreatedAtUtc  { get; private set; }
+    public DateTime  ExpiresAtUtc  { get; private set; }
+    public DateTime?  FinalizedAtUtc  { get; private set; }
     public bool IsFinalized => FinalizedAtUtc.HasValue;
-    public Property Property  { get; set; } = null!;
+    public Property Property  { get; private set; } = null!;
     private PropertyImageUploadIntent() {}
 
     public static PropertyImageUploadIntent Create (
@@ -29,6 +29,11 @@ public sealed class PropertyImageUploadIntent
         if (propertyId == Guid.Empty)
         {
             throw new ArgumentException("Property ID is required", nameof(propertyId));
+        }
+
+        if (!Enum.IsDefined(storageProvider))
+        {
+            throw new ArgumentException("Invalid storage provider", nameof(storageProvider));
         }
 
         if (expiresAtUtc <= createdAtUtc)

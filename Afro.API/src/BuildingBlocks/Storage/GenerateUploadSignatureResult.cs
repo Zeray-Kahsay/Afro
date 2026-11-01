@@ -4,7 +4,8 @@ public sealed record GenerateUploadSignatureResult(
     string CloudName,
     string ApiKey,
     long Timestamp,
-    string Signature
+    string Signature,
+    string StorageKey
 );
 
 

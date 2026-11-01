@@ -4,7 +4,7 @@ public static class MediaEndpoints
 {
     public static IEndpointRouteBuilder MapMediaEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGenerateUploadSignature();
+        app.MapCreatePropertyImageUploadIntent();
 
         return app; 
     }

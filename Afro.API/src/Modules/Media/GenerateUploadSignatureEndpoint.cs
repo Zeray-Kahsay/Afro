@@ -4,21 +4,22 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Afro.API.src.Modules.Media;
 
-public static class GenerateUploadSignatureEndpoint
+public static class CreatePropertyImageUploadIntentEndpoint
 {
-    public static IEndpointRouteBuilder MapGenerateUploadSignature(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapCreatePropertyImageUploadIntent(this IEndpointRouteBuilder app)
     {
         app.MapPost(
-            "/api/media/upload-signature",
+            "/api/properties/{propertyId: guid}/images/upload-intents",
             [Authorize(
                 Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
             )]
         async (
-                GenerateUploadSignatureHandler handler,
+                Guid propertyId,
+                CreatePropertyImageUploadIntentHandler handler,
                 CancellationToken ct
             ) =>
             {
-                var result = await handler.HandleAsync(ct);
+                var result = await handler.HandleAsync(propertyId, ct);
 
                 return result.ToApiResult();
             }

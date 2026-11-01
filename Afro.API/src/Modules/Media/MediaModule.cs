@@ -4,7 +4,7 @@ public static class MediaModule
 {
     public static IServiceCollection AddMediaModule(this IServiceCollection services)
     {
-        services.AddScoped<GenerateUploadSignatureHandler>();
+        services.AddScoped<CreatePropertyImageUploadIntentHandler>();
 
         return services;
     }
