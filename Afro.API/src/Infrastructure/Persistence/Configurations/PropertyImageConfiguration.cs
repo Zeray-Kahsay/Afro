@@ -40,7 +40,16 @@ public class PropertyImageConfiguration : IEntityTypeConfiguration<PropertyImage
         {
             x.PropertyId,
             x.SortOrder
+        
         });
+
+        builder.HasIndex(x => new
+        {
+            x.PropertyId,
+            x.StorageProvider,
+            x.StorageKey      
+        }).IsUnique();
+
 
     }
 }

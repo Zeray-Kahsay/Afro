@@ -45,4 +45,53 @@ public static class ListingErrors
             "Listings.OwnerHasActiveListings",
             "Owner has active listings and cannot be cleared"
         );
+
+    public static readonly Error InvalidImageUploadRequest = 
+        new (
+            "Listings.InvalidImageUploadRequest",
+            "Invalid image upload request"
+        );
+
+    public static readonly Error UploadIntentNotFound = 
+        new (
+            "Listings.UploadIntentNotFound",
+            "One or more upload intents were not found"
+        );
+
+    public static readonly Error UploadIntentDoesNotBelongToProperty = 
+        new (
+            "Listings.UploadIntentDoesNotBelongToProperty",
+            "An upload intent does not belong to the this property"
+        );
+
+    public static readonly Error UploadIntentAlreadyFinalized = 
+        new (
+            "Listings.UploadIntentAlreadyFinalized",
+            "The specified upload intent is already finalized"
+        );
+
+    public static readonly Error UploadIntentExpired = 
+        new (
+            "Listings.UploadIntentExpired",
+            "The specified upload intent has expired"
+        );
+
+    public static readonly Error UploadAssetNotFound = 
+        new (
+            "Listings.UploadAssetNotFound",
+            "The specified upload asset was not found"
+        );
+
+    public static readonly Error InvalidUploadedImage = 
+        new (
+            "Listings.InvalidUploadedImage",
+            "The specified uploaded image is invalid"
+        );
+
+    public static readonly Error PropertyImageLimitExceeded = 
+        new (
+            "Listings.PropertyImageLimitExceeded",
+            "The property has exceeded the maximum number of allowed images"
+        );
+
 }

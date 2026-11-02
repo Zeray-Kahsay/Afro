@@ -9,7 +9,7 @@ public static class CreatePropertyImageUploadIntentEndpoint
     public static IEndpointRouteBuilder MapCreatePropertyImageUploadIntent(this IEndpointRouteBuilder app)
     {
         app.MapPost(
-            "/api/properties/{propertyId: guid}/images/upload-intents",
+            "/api/properties/{propertyId:guid}/images/upload-intents",
             [Authorize(
                 Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
             )]

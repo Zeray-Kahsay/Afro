@@ -323,6 +323,9 @@ namespace Afro.API.src.Infrastructure.Migrations
 
                     b.HasIndex("PropertyId", "SortOrder");
 
+                    b.HasIndex("PropertyId", "StorageProvider", "StorageKey")
+                        .IsUnique();
+
                     b.ToTable("PropertyImages", (string)null);
                 });
 
@@ -339,6 +342,7 @@ namespace Afro.API.src.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FinalizedAtUtc")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("PropertyId")
@@ -359,7 +363,7 @@ namespace Afro.API.src.Infrastructure.Migrations
                     b.HasIndex("StorageProvider", "StorageKey")
                         .IsUnique();
 
-                    b.ToTable("PropertyImageUploadIntent", (string)null);
+                    b.ToTable("PropertyImageUploadIntents", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

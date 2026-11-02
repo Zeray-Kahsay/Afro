@@ -76,3 +76,42 @@ Has Properties?
   
   # Property lifecycle 
   Draft → Published → Archived → Published
+
+
+
+### Image upload workflow
+
+React
+  |
+  | POST /api/properties/{propertyId}/images/upload-intents
+  v
+.NET API
+  |
+  | Verify property
+  | Generate StorageKey
+  | Create PropertyImageUploadIntent
+  | Generate Cloudinary signature
+  | Save intent
+  v
+React receives upload authorization
+  |
+  | Upload image directly to Cloudinary
+  v
+Cloudinary
+  |
+  | Upload completed
+  v
+React
+  |
+  | POST /api/properties/{propertyId}/images
+  | { uploadIntentId: "..." }
+  v
+.NET API
+  |
+  | Verify intent
+  | Verify Cloudinary asset
+  | Validate image
+  | Associate image with property
+  | Mark intent finalized
+  v
+SQL Server

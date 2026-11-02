@@ -41,5 +41,10 @@ public sealed class PropertyImageUploadIntentConfiguration : IEntityTypeConfigur
             x.StorageProvider,
             x.StorageKey
         }).IsUnique();
+
+        builder.Property(x => x.FinalizedAtUtc)
+            .IsRequired(false)
+            .IsConcurrencyToken();
     }
+
 }

@@ -2,7 +2,7 @@ namespace Afro.API.src.Modules.Listings.Domain;
 
 public sealed class Property
 {
-    private const int MaxImages = 30;
+    public const int MaximumImages = 30;
     public Guid Id { get; private set; }
     public string Title { get; private set; } = null!;
     public string Description { get; private set; } = null!;
@@ -78,9 +78,9 @@ public sealed class Property
         url = url.Trim();
         storageKey = storageKey.Trim();
 
-        if (_images.Count >= MaxImages)
+        if (_images.Count >= MaximumImages)
         {
-            throw new InvalidOperationException($"A property cannot have more than {MaxImages} images");
+            throw new InvalidOperationException($"A property cannot have more than {MaximumImages} images");
         }
 
         if (_images.Any(x => 
