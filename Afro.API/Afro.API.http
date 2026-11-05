@@ -46,4 +46,7 @@ Content-Type: {{ContentType}}
 DELETE {{Afro.API_HostAddress}}/api/searchowner/1
 Content-Type: {{ContentType}}
 
+### Create Property to Owner
+POST {{Afro.API_HostAddress}}/api/searchowner/1/property  
+
 

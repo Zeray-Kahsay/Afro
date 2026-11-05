@@ -59,6 +59,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 app.UseCors("AllowedFrontendOrigins");
 app.UseAuthentication();

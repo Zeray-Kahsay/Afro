@@ -12,9 +12,9 @@ public static class CreatePropertyEndpoint
     {
         group.MapPost(
                 "/properties",
-                [Authorize(
-                    Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
-                )]
+        [Authorize(
+            Roles = $"{RoleNames.Admin}, {RoleNames.Agent}"
+        )]
         async (
             CreatePropertyCommand command,
             [FromServices] CreatePropertyValidator validator,
@@ -28,6 +28,7 @@ public static class CreatePropertyEndpoint
 
              return result.ToApiResult();
          });
+
 
         return group;
     }

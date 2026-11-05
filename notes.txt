@@ -115,3 +115,22 @@ React
   | Mark intent finalized
   v
 SQL Server
+
+
+### Important security considerations 
+| Concern              | Current implementation          | Required consideration                                                                   |
+| -------------------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Upload ownership     | Intent belongs to property      | Verify the authenticated user is authorized to manage that property                      |
+| Image verification   | Cloudinary metadata             | Verify the resource type is actually `image`, not merely an asset with an allowed format |
+| Database consistency | Transaction + concurrency token | Test simultaneous finalization requests                                                  |
+Also, the Cloudinary verification operation should distinguish between:
+
+Asset not found: return null.
+Cloudinary unavailable or authentication failure: throw an exception.
+Invalid asset metadata: reject finalization.
+
+Never interpret a Cloudinary API outage as a missing image.
+
+One more consideration: your current handler verifies 
+assets before starting the database transaction.
+ That is deliberate: external network calls should not hold SQL Server transactions open. The concurrency token protects finalization when two requests race.

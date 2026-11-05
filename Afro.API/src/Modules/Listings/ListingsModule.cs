@@ -53,7 +53,10 @@ public static class ListingsModule
         services.AddScoped<RestoreOwnerHandler>();
 
         services.AddScoped<ClearOwnerHandler>();
-        
+
+        services.AddScoped<UploadPropertyImagesHandler>();
+
+
 
 
         return services;
